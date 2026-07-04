@@ -11,7 +11,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
-BASE_URL = (sys.argv[1] if len(sys.argv) > 1 else "https://example.com").rstrip("/")
+BASE_URL = (sys.argv[1] if len(sys.argv) > 1 else "https://invoicelark.github.io").rstrip("/")
 
 with open(os.path.join(ROOT, "generator", "data", "professions.json")) as f:
     PROFESSIONS = json.load(f)
@@ -29,7 +29,7 @@ HEAD = """<!DOCTYPE html>
 <body>
 <header class="site">
   <div class="wrap">
-    <a class="logo" href="{prefix}">Lancer<span>Kit</span></a>
+    <a class="logo" href="{prefix}">Invoice<span>Lark</span></a>
     <nav class="main">
       <a href="{prefix}invoice-generator/">Invoice Generator</a>
       <a href="{prefix}hourly-rate-calculator/">Rate Calculator</a>
@@ -45,7 +45,7 @@ FOOT = """</div>
 </main>
 <footer class="site">
   <div class="wrap">
-    <p>© 2026 LancerKit — free tools for freelancers. <a href="{prefix}about/">About</a> · <a href="{prefix}privacy/">Privacy</a></p>
+    <p>© 2026 InvoiceLark — free tools for freelancers. <a href="{prefix}about/">About</a> · <a href="{prefix}privacy/">Privacy</a></p>
     <p>This site provides general information, not tax, legal or financial advice.</p>
   </div>
 </footer>
