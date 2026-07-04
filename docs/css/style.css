@@ -85,6 +85,15 @@ footer.site a { color: var(--ink-soft); }
   font-size: .95rem;
 }
 .reco strong { color: #00775a; }
+.promo {
+  border: 1px solid #d7ddf5; background: linear-gradient(180deg, #f7f9ff, #fff);
+  border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; box-shadow: var(--shadow);
+}
+.promo .tag { display: inline-block; background: var(--brand); color: #fff; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; vertical-align: middle; }
+.promo h3 { margin: 12px 0 6px; font-size: 1.12rem; }
+.promo p { margin: 0 0 14px; color: var(--ink-soft); font-size: .95rem; }
+.promo .btn { padding: 10px 18px; font-size: .95rem; }
+.promo .price { color: var(--ink-soft); font-size: .9rem; margin-left: 10px; }
 table.simple { border-collapse: collapse; width: 100%; font-size: .95rem; }
 table.simple th, table.simple td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
 table.simple th { color: var(--ink-soft); font-weight: 600; font-size: .85rem; }

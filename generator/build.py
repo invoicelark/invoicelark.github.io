@@ -39,6 +39,7 @@ HEAD = """<!DOCTYPE html>
       <a href="{prefix}invoice-generator/">Invoice Generator</a>
       <a href="{prefix}hourly-rate-calculator/">Rate Calculator</a>
       <a href="{prefix}invoice-template/">Templates</a>
+      <a href="https://kandvfamily.gumroad.com" target="_blank" rel="noopener">Shop</a>
     </nav>
   </div>
 </header>
@@ -113,6 +114,13 @@ def profession_page(p):
     <li>Payment terms: due date, accepted methods, and your late-fee policy</li>
   </ol>
   <p>Ready to bill? <a href="{prefix}invoice-generator/?items={prefill}">Create your {name.lower()} invoice now</a> — it takes about a minute.</p>
+
+  <div class="promo">
+    <span class="tag">InvoiceLark Pro</span>
+    <h3>Lock the deal before the work starts</h3>
+    <p>The Freelance Contract Bundle: 6 client-ready templates — service agreement, statement of work, NDA, payment terms, change order and a final-demand letter. Everything a {name.lower()} needs to get paid without surprises.</p>
+    <a class="btn" href="https://kandvfamily.gumroad.com/l/contract-bundle" target="_blank" rel="noopener">Get it on Gumroad</a><span class="price">$19 · instant download</span>
+  </div>
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
     {{"@type":"ListItem","position":1,"name":"Home","item":"{BASE_URL}/"}},
