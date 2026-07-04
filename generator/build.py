@@ -24,6 +24,11 @@ HEAD = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{canonical}">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232d5bff'/><text x='50' y='70' font-size='54' font-weight='800' font-family='Arial' fill='white' text-anchor='middle'>IL</text></svg>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{canonical}">
 <link rel="stylesheet" href="{prefix}css/style.css">
 </head>
 <body>
@@ -132,8 +137,8 @@ def hub_page():
         for p in PROFESSIONS
     )
     head = HEAD.format(
-        title="Free Invoice Templates by Profession — 20+ Real Examples",
-        description="Free invoice templates with realistic example line items for 20+ professions: designers, developers, photographers, cleaners, trades and more. Open any of them in our free PDF generator.",
+        title="Free Invoice Templates by Profession — 35+ Real Examples",
+        description="Free invoice templates with realistic example line items for 35+ professions: designers, developers, photographers, cleaners, trades and more. Open any of them in our free PDF generator.",
         canonical=f"{BASE_URL}/invoice-template/",
         prefix=prefix,
     )
