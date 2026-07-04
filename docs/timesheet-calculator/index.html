@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timesheet Calculator with Breaks — Weekly Work Hours & Pay</title>
+<meta name="description" content="Free weekly timesheet calculator with lunch breaks and overtime. Enter start and end times for each day, get total hours and pay instantly. No sign-up.">
+<link rel="canonical" href="https://invoicelark.github.io/timesheet-calculator/">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  table.ts { width: 100%; border-collapse: collapse; }
+  table.ts th { text-align: left; font-size: .78rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; padding: 6px 8px 6px 0; }
+  table.ts td { padding: 5px 8px 5px 0; }
+  table.ts input[type=time], table.ts input[type=number] { padding: 8px 8px; font-size: .92rem; }
+  table.ts .day { font-weight: 600; font-size: .92rem; white-space: nowrap; }
+  table.ts .dh { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-soft); white-space: nowrap; }
+  @media (max-width: 700px) {
+    table.ts, table.ts tbody, table.ts tr { display: block; }
+    table.ts thead { display: none; }
+    table.ts tr { border-bottom: 1px solid var(--line); padding: 8px 0; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 6px; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="../">Invoice<span>Lark</span></a>
+    <nav class="main">
+      <a href="../invoice-generator/">Invoice Generator</a>
+      <a href="../receipt-maker/">Receipt Maker</a>
+      <a href="../invoice-template/">Templates</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="wrap">
+  <h1>Timesheet Calculator</h1>
+  <p class="subtitle">Enter your start time, end time and break for each day — get total hours, overtime and pay for the week instantly. Free, private (nothing leaves your browser), and it remembers your entries.</p>
+
+  <div class="card">
+    <table class="ts">
+      <thead><tr><th>Day</th><th>Start</th><th>End</th><th>Break (min)</th><th style="text-align:right">Hours</th></tr></thead>
+      <tbody id="days"></tbody>
+    </table>
+    <div class="row" style="margin-top:18px;">
+      <div>
+        <label for="rate">Hourly rate (optional)</label>
+        <input type="number" id="rate" min="0" step="0.5" placeholder="e.g. 25">
+      </div>
+      <div>
+        <label for="otAfter">Overtime after (hours/week)</label>
+        <input type="number" id="otAfter" value="40" min="0" step="1">
+      </div>
+      <div>
+        <label for="otMult">Overtime multiplier</label>
+        <select id="otMult">
+          <option value="1.5">1.5× (time and a half)</option>
+          <option value="2">2× (double time)</option>
+          <option value="1">No overtime pay</option>
+        </select>
+      </div>
+    </div>
+    <div class="result-box">
+      <div>Weekly total</div>
+      <div class="result-big" id="totalH">0:00</div>
+      <div class="result-note" id="payLine"></div>
+    </div>
+    <div style="margin-top:16px; display:flex; gap:12px;">
+      <button class="btn secondary" type="button" id="clearBtn">Clear week</button>
+      <button class="btn secondary" type="button" onclick="window.print()">Print timesheet</button>
+    </div>
+  </div>
+
+  <h2>How hours are calculated</h2>
+  <p>Daily hours = (end − start) − break. Overnight shifts are handled automatically: if the end time is earlier than the start time, the calculator assumes the shift crossed midnight. Weekly overtime kicks in after the threshold you set (40 hours is the U.S. federal default; adjust it for your rules), and overtime hours are paid at the multiplier you choose.</p>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <h3>Does it handle overnight shifts?</h3>
+    <p>Yes — a 22:00 start with a 06:00 end counts as 8 hours (minus break), not negative time.</p>
+    <h3>Is my timesheet saved?</h3>
+    <p>It's saved in your own browser automatically, so you can fill it in day by day through the week. Use "Clear week" to start fresh.</p>
+    <h3>How do I bill these hours to a client?</h3>
+    <p>Take the weekly total to our <a href="../invoice-generator/">free invoice generator</a> — one line item with your hours and rate is all it takes. And if you're not sure your rate is right, check it with the <a href="../hourly-rate-calculator/">hourly rate calculator</a>.</p>
+  </div>
+</div>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 InvoiceLark — free tools for freelancers. <a href="../about/">About</a> · <a href="../privacy/">Privacy</a></p>
+    <p>This site provides general information, not tax, legal or financial advice.</p>
+  </div>
+</footer>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Does it handle overnight shifts?","acceptedAnswer":{"@type":"Answer","text":"Yes — a 22:00 start with a 06:00 end counts as 8 hours (minus break), not negative time."}},
+{"@type":"Question","name":"Is my timesheet saved?","acceptedAnswer":{"@type":"Answer","text":"It's saved in your own browser automatically, so you can fill it in day by day through the week."}}]}
+</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  var tbody = $('days');
+  DAYS.forEach(function (d, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td class="day">' + d + '</td>' +
+      '<td><input type="time" id="s' + i + '"></td>' +
+      '<td><input type="time" id="e' + i + '"></td>' +
+      '<td><input type="number" id="b' + i + '" min="0" step="5" placeholder="0"></td>' +
+      '<td class="dh" id="h' + i + '">—</td>';
+    tbody.appendChild(tr);
+  });
+  function toMin(v) {
+    if (!v) return null;
+    var p = v.split(':');
+    return (+p[0]) * 60 + (+p[1]);
+  }
+  function fmt(mins) {
+    var h = Math.floor(mins / 60), m = Math.round(mins % 60);
+    return h + ':' + (m < 10 ? '0' : '') + m;
+  }
+  function calc() {
+    var total = 0;
+    DAYS.forEach(function (d, i) {
+      var s = toMin($('s' + i).value), e = toMin($('e' + i).value);
+      var b = +$('b' + i).value || 0;
+      if (s === null || e === null) { $('h' + i).textContent = '—'; return; }
+      var mins = e - s;
+      if (mins < 0) mins += 24 * 60; // overnight shift
+      mins = Math.max(0, mins - b);
+      total += mins;
+      $('h' + i).textContent = fmt(mins);
+    });
+    $('totalH').textContent = fmt(total) + ' hours';
+    var rate = +$('rate').value || 0;
+    var otAfter = (+$('otAfter').value || 0) * 60;
+    var mult = +$('otMult').value;
+    var line = '';
+    if (otAfter > 0 && total > otAfter && mult > 1) {
+      line = fmt(otAfter) + ' regular + ' + fmt(total - otAfter) + ' overtime. ';
+    }
+    if (rate > 0) {
+      var regular = Math.min(total, otAfter || total) / 60 * rate;
+      var ot = otAfter ? Math.max(0, total - otAfter) / 60 * rate * mult : 0;
+      line += 'Pay: $' + (regular + ot).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+    $('payLine').textContent = line;
+    save();
+  }
+  function save() {
+    var data = { rate: $('rate').value, otAfter: $('otAfter').value, otMult: $('otMult').value, days: [] };
+    DAYS.forEach(function (d, i) {
+      data.days.push({ s: $('s' + i).value, e: $('e' + i).value, b: $('b' + i).value });
+    });
+    try { localStorage.setItem('lk_timesheet', JSON.stringify(data)); } catch (e) {}
+  }
+  function load() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem('lk_timesheet')); } catch (e) {}
+    if (!s) return;
+    $('rate').value = s.rate || ''; $('otAfter').value = s.otAfter || 40; $('otMult').value = s.otMult || '1.5';
+    (s.days || []).forEach(function (d, i) {
+      if (i > 6) return;
+      $('s' + i).value = d.s || ''; $('e' + i).value = d.e || ''; $('b' + i).value = d.b || '';
+    });
+  }
+  $('clearBtn').onclick = function () {
+    try { localStorage.removeItem('lk_timesheet'); } catch (e) {}
+    location.reload();
+  };
+  document.querySelectorAll('input, select').forEach(function (el) { el.addEventListener('input', calc); });
+  load(); calc();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Receipt Maker — Create & Print a Payment Receipt Online</title>
+<meta name="description" content="Free online receipt maker. Create a professional payment receipt with a PAID stamp and download it as a PDF in under a minute. No sign-up, no watermark.">
+<link rel="canonical" href="https://invoicelark.github.io/receipt-maker/">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .builder { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 900px) { .builder { grid-template-columns: 1fr; } }
+  .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .items-table td { padding: 4px 4px 4px 0; vertical-align: top; }
+  .items-table input { padding: 8px 10px; font-size: .92rem; }
+  .del-item { background: none; border: 0; color: #c33; font-size: 1.1rem; cursor: pointer; padding: 8px 4px; }
+  .receipt-paper {
+    background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: 40px 44px; box-shadow: var(--shadow); font-size: .95rem; position: relative;
+  }
+  .rc-head { text-align: center; border-bottom: 2px solid #1a1f2e; padding-bottom: 16px; margin-bottom: 20px; }
+  .rc-title { font-size: 1.5rem; font-weight: 800; letter-spacing: .1em; }
+  .rc-biz { white-space: pre-line; color: #5a6072; font-size: .88rem; margin-top: 6px; }
+  .rc-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #e4e4de; }
+  .rc-row .k { color: #9aa0b0; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
+  .rc-items { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  .rc-items td { padding: 7px 0; border-bottom: 1px solid #f0f0ea; }
+  .rc-items td:last-child { text-align: right; }
+  .rc-total { display: flex; justify-content: space-between; font-weight: 800; font-size: 1.25rem; padding-top: 12px; }
+  .paid-stamp {
+    position: absolute; top: 110px; right: 34px; transform: rotate(-14deg);
+    border: 3px solid #00b386; color: #00b386; font-weight: 800; font-size: 1.5rem;
+    padding: 4px 18px; border-radius: 8px; letter-spacing: .15em; opacity: .85;
+  }
+  .rc-thanks { text-align: center; color: #9aa0b0; margin-top: 22px; font-size: .85rem; }
+  @media print {
+    body * { visibility: hidden; }
+    #receiptPaper, #receiptPaper * { visibility: visible; }
+    #receiptPaper { position: absolute; left: 0; top: 0; width: 100%; border: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="../">Invoice<span>Lark</span></a>
+    <nav class="main">
+      <a href="../invoice-generator/">Invoice Generator</a>
+      <a href="../receipt-maker/">Receipt Maker</a>
+      <a href="../invoice-template/">Templates</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="wrap">
+  <h1>Free Receipt Maker</h1>
+  <p class="subtitle">Create a clean payment receipt with a PAID stamp and print or save it as a PDF. Runs entirely in your browser — free, no account, and your data never leaves your device.</p>
+
+  <div class="builder">
+    <div class="card">
+      <div class="row">
+        <div><label for="rcNo">Receipt #</label><input type="text" id="rcNo" value="RCP-001"></div>
+        <div><label for="rcDate">Date</label><input type="date" id="rcDate"></div>
+      </div>
+      <label for="bizField">Your business (name & details)</label>
+      <textarea id="bizField" rows="3" placeholder="Jane's Cleaning Services&#10;jane@example.com · (555) 010-1234"></textarea>
+      <label for="fromField">Received from (payer)</label>
+      <input type="text" id="fromField" placeholder="John Smith">
+      <label for="methodField">Payment method</label>
+      <select id="methodField">
+        <option>Cash</option><option>Card</option><option>Bank transfer</option>
+        <option>Check</option><option>PayPal</option><option>Venmo / Zelle</option><option>Other</option>
+      </select>
+      <label>Items / services paid for</label>
+      <table class="items-table"><tbody id="itemRows"></tbody></table>
+      <button class="btn secondary" type="button" id="addItem" style="margin-top:10px; padding:8px 16px; font-size:.9rem;">+ Add item</button>
+      <div class="row" style="margin-top:6px;">
+        <div><label for="currency">Currency</label>
+          <select id="currency">
+            <option value="$">USD $</option><option value="€">EUR €</option><option value="£">GBP £</option>
+            <option value="CA$">CAD $</option><option value="AU$">AUD $</option><option value="₹">INR ₹</option>
+          </select>
+        </div>
+        <div><label for="noteField">Note (optional)</label><input type="text" id="noteField" placeholder="e.g. Balance paid in full"></div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:12px;">
+        <button class="btn" type="button" onclick="window.print()">Download PDF</button>
+        <button class="btn secondary" type="button" id="clearBtn">Clear</button>
+      </div>
+      <p class="result-note" style="margin-top:12px;">“Download PDF” opens the print dialog — choose “Save as PDF”. Entries auto-save in your browser.</p>
+    </div>
+
+    <div class="receipt-paper" id="receiptPaper">
+      <div class="paid-stamp">PAID</div>
+      <div class="rc-head">
+        <div class="rc-title">RECEIPT</div>
+        <div class="rc-biz" id="pBiz">—</div>
+      </div>
+      <div class="rc-row"><span class="k">Receipt #</span><span id="pNo">—</span></div>
+      <div class="rc-row"><span class="k">Date</span><span id="pDate">—</span></div>
+      <div class="rc-row"><span class="k">Received from</span><span id="pFrom">—</span></div>
+      <div class="rc-row"><span class="k">Payment method</span><span id="pMethod">—</span></div>
+      <table class="rc-items"><tbody id="pItems"></tbody></table>
+      <div class="rc-total"><span>Total received</span><span id="pTotal">—</span></div>
+      <div class="rc-thanks" id="pNote">Thank you for your business!</div>
+    </div>
+  </div>
+
+  <h2>Receipt vs. invoice — which one do you need?</h2>
+  <p>An <strong>invoice</strong> is a request for payment — you send it before the money arrives. A <strong>receipt</strong> is proof of payment — you issue it after. If you still need to get paid, use our <a href="../invoice-generator/">free invoice generator</a> first, then come back here to issue the receipt once the payment lands.</p>
+
+  <h2 id="faq">Frequently asked questions</h2>
+  <div class="faq">
+    <h3>Is this receipt maker free?</h3>
+    <p>Completely free — no watermark, no account, no limits.</p>
+    <h3>Is a printed receipt from this tool valid?</h3>
+    <p>Yes. A receipt is valid when it identifies the seller, the payer, the date, the amount and what it was for — all of which this tool includes. Some jurisdictions require tax details for business receipts; add yours in the business field if needed.</p>
+    <h3>Where is my data stored?</h3>
+    <p>Only in your browser's local storage on your own device. Nothing is uploaded anywhere.</p>
+    <h3>Can I use it for cash payments?</h3>
+    <p>That's its most common use — cash payments leave no paper trail of their own, so a written receipt protects both sides.</p>
+  </div>
+</div>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 InvoiceLark — free tools for freelancers. <a href="../about/">About</a> · <a href="../privacy/">Privacy</a></p>
+    <p>This site provides general information, not tax, legal or financial advice.</p>
+  </div>
+</footer>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is this receipt maker free?","acceptedAnswer":{"@type":"Answer","text":"Completely free — no watermark, no account, no limits."}},
+{"@type":"Question","name":"Is a printed receipt from this tool valid?","acceptedAnswer":{"@type":"Answer","text":"Yes. A receipt is valid when it identifies the seller, the payer, the date, the amount and what it was for — all of which this tool includes."}},
+{"@type":"Question","name":"Where is my data stored?","acceptedAnswer":{"@type":"Answer","text":"Only in your browser's local storage on your own device. Nothing is uploaded anywhere."}}]}
+</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var rows = $('itemRows');
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function money(n, cur) { return cur + n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+  function itemRow(desc, amt) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="width:65%"><input type="text" class="i-desc" placeholder="Description" value="' + (desc || '') + '"></td>' +
+      '<td><input type="number" class="i-amt" min="0" step="any" placeholder="0.00" value="' + (amt || '') + '"></td>' +
+      '<td><button type="button" class="del-item" title="Remove">×</button></td>';
+    tr.querySelector('.del-item').onclick = function () { tr.remove(); render(); };
+    tr.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', render); });
+    rows.appendChild(tr);
+  }
+  function render() {
+    var cur = $('currency').value;
+    $('pBiz').textContent = $('bizField').value || '—';
+    $('pNo').textContent = $('rcNo').value || '—';
+    $('pDate').textContent = $('rcDate').value || '—';
+    $('pFrom').textContent = $('fromField').value || '—';
+    $('pMethod').textContent = $('methodField').value;
+    var total = 0, html = '';
+    rows.querySelectorAll('tr').forEach(function (tr) {
+      var d = tr.querySelector('.i-desc').value;
+      var a = parseFloat(tr.querySelector('.i-amt').value) || 0;
+      if (d || a) { total += a; html += '<tr><td>' + esc(d) + '</td><td>' + money(a, cur) + '</td></tr>'; }
+    });
+    $('pItems').innerHTML = html;
+    $('pTotal').textContent = money(total, cur);
+    $('pNote').textContent = $('noteField').value || 'Thank you for your business!';
+    try {
+      var items = [];
+      rows.querySelectorAll('tr').forEach(function (tr) {
+        items.push({ d: tr.querySelector('.i-desc').value, a: tr.querySelector('.i-amt').value });
+      });
+      localStorage.setItem('lk_receipt', JSON.stringify({
+        no: $('rcNo').value, date: $('rcDate').value, biz: $('bizField').value,
+        from: $('fromField').value, method: $('methodField').value,
+        cur: $('currency').value, note: $('noteField').value, items: items
+      }));
+    } catch (e) {}
+  }
+  function load() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem('lk_receipt')); } catch (e) {}
+    if (s && s.items && s.items.length) {
+      $('rcNo').value = s.no || 'RCP-001'; $('rcDate').value = s.date || '';
+      $('bizField').value = s.biz || ''; $('fromField').value = s.from || '';
+      $('methodField').value = s.method || 'Cash'; $('currency').value = s.cur || '$';
+      $('noteField').value = s.note || '';
+      s.items.forEach(function (it) { itemRow(it.d, it.a); });
+    } else { itemRow('', ''); itemRow('', ''); }
+    if (!$('rcDate').value) $('rcDate').valueAsDate = new Date();
+  }
+  $('addItem').onclick = function () { itemRow('', ''); };
+  $('clearBtn').onclick = function () {
+    try { localStorage.removeItem('lk_receipt'); } catch (e) {}
+    location.href = location.pathname;
+  };
+  ['rcNo','rcDate','bizField','fromField','methodField','currency','noteField'].forEach(function (id) {
+    $(id).addEventListener('input', render);
+  });
+  load(); render();
+})();
+</script>
+</body>
+</html>

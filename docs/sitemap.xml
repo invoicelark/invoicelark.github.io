@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://invoicelark.github.io/</loc></url>
   <url><loc>https://invoicelark.github.io/invoice-generator/</loc></url>
+  <url><loc>https://invoicelark.github.io/receipt-maker/</loc></url>
+  <url><loc>https://invoicelark.github.io/timesheet-calculator/</loc></url>
   <url><loc>https://invoicelark.github.io/hourly-rate-calculator/</loc></url>
   <url><loc>https://invoicelark.github.io/late-fee-calculator/</loc></url>
   <url><loc>https://invoicelark.github.io/freelance-quote-calculator/</loc></url>
@@ -29,4 +31,19 @@
   <url><loc>https://invoicelark.github.io/invoice-template/event-planner/</loc></url>
   <url><loc>https://invoicelark.github.io/invoice-template/writer/</loc></url>
   <url><loc>https://invoicelark.github.io/invoice-template/dog-walker/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/hairstylist/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/plumber/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/landscaper/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/painter/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/carpenter/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/caterer/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/dj/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/nanny/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/massage-therapist/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/mechanic/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/seo-consultant/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/ux-designer/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/data-analyst/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/voice-actor/</loc></url>
+  <url><loc>https://invoicelark.github.io/invoice-template/real-estate-photographer/</loc></url>
 </urlset>

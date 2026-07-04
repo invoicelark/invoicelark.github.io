@@ -108,6 +108,12 @@ def profession_page(p):
     <li>Payment terms: due date, accepted methods, and your late-fee policy</li>
   </ol>
   <p>Ready to bill? <a href="{prefix}invoice-generator/?items={prefill}">Create your {name.lower()} invoice now</a> — it takes about a minute.</p>
+  <script type="application/ld+json">
+  {{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {{"@type":"ListItem","position":1,"name":"Home","item":"{BASE_URL}/"}},
+    {{"@type":"ListItem","position":2,"name":"Invoice templates","item":"{BASE_URL}/invoice-template/"}},
+    {{"@type":"ListItem","position":3,"name":"{name} Invoice Template","item":"{BASE_URL}/invoice-template/{p['slug']}/"}}]}}
+  </script>
 """
     head = HEAD.format(
         title=title,
@@ -145,6 +151,8 @@ def sitemap():
     static = [
         "",
         "invoice-generator/",
+        "receipt-maker/",
+        "timesheet-calculator/",
         "hourly-rate-calculator/",
         "late-fee-calculator/",
         "freelance-quote-calculator/",
