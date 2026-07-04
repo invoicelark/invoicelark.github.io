@@ -10,7 +10,7 @@ import sys
 import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = os.path.join(ROOT, "site")
+SITE = os.path.join(ROOT, "docs")
 BASE_URL = (sys.argv[1] if len(sys.argv) > 1 else "https://invoicelark.github.io").rstrip("/")
 
 with open(os.path.join(ROOT, "generator", "data", "professions.json")) as f:
