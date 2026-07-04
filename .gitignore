@@ -1,2 +1,5 @@
 .DS_Store
 .claude/
+
+# Paid Gumroad products — must never be published to the public site
+products/
