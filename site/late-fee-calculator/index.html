@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Late Payment Fee Calculator for Invoices — Interest & Flat Fees</title>
+<meta name="description" content="Calculate the late fee or interest owed on an overdue invoice. Supports flat fees, monthly percentage charges, and annual interest rates, with a ready-to-send reminder line.">
+<link rel="canonical" href="https://example.com/late-fee-calculator/">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="../">Lancer<span>Kit</span></a>
+    <nav class="main">
+      <a href="../invoice-generator/">Invoice Generator</a>
+      <a href="../hourly-rate-calculator/">Rate Calculator</a>
+      <a href="../invoice-template/">Templates</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="wrap">
+  <h1>Late Payment Fee Calculator</h1>
+  <p class="subtitle">A client is overdue. Work out exactly what the late fee or interest comes to, and get a polite, ready-to-paste line for your reminder email.</p>
+
+  <div class="card" style="max-width:640px">
+    <div class="row">
+      <div>
+        <label for="amount">Invoice amount</label>
+        <input type="number" id="amount" value="2500" min="0" step="50">
+      </div>
+      <div>
+        <label for="days">Days overdue</label>
+        <input type="number" id="days" value="30" min="0">
+      </div>
+    </div>
+    <label for="method">Late fee method</label>
+    <select id="method">
+      <option value="monthly">Monthly % of invoice (most common: 1–2%/month)</option>
+      <option value="annual">Annual interest rate (statutory style)</option>
+      <option value="flat">Flat fee</option>
+    </select>
+    <div id="rateWrap">
+      <label for="feeRate" id="rateLabel">Monthly rate %</label>
+      <input type="number" id="feeRate" value="1.5" min="0" step="0.1">
+    </div>
+    <div class="result-box">
+      <div>Late fee owed</div>
+      <div class="result-big" id="fee">—</div>
+      <div class="result-note" id="total"></div>
+    </div>
+    <label for="copyLine" style="margin-top:22px">Copy-paste line for your reminder email</label>
+    <textarea id="copyLine" rows="3" readonly style="font-size:.9rem; color:#444"></textarea>
+  </div>
+
+  <h2>Can I even charge a late fee?</h2>
+  <p>In most places, yes — if your invoice or contract said so up front. A common approach is 1–1.5% per month on overdue balances. Some jurisdictions also give you a statutory right to interest on late commercial payments (for example, the EU late-payment rules and the UK's statutory 8% + base rate). Check the rules where you operate, and put your late-fee terms on every invoice — our <a href="../invoice-generator/">free invoice generator</a> has a notes field made for exactly that.</p>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <h3>What's a reasonable late fee?</h3>
+    <p>1% to 2% per month is typical and rarely disputed. Higher than that can be legally unenforceable in some jurisdictions and can sour a client relationship that might otherwise recover.</p>
+    <h3>Should I always charge it?</h3>
+    <p>Many freelancers use the late fee as leverage rather than revenue: mention that it's accruing, then offer to waive it if payment arrives within a few days. You get paid faster and stay the good guy.</p>
+    <h3>How do I prevent late payments in the first place?</h3>
+    <p>Shorter payment terms (7–14 days instead of 30), a deposit up front, late-fee terms printed on the invoice, and making payment as easy as possible. Fewer steps means faster money.</p>
+  </div>
+</div>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 LancerKit — free tools for freelancers. <a href="../about/">About</a> · <a href="../privacy/">Privacy</a></p>
+    <p>This site provides general information, not tax, legal or financial advice.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  function $(id) { return document.getElementById(id); }
+  function calc() {
+    var amount = +$('amount').value || 0;
+    var days = +$('days').value || 0;
+    var method = $('method').value;
+    var rate = +$('feeRate').value || 0;
+    var fee = 0;
+    if (method === 'monthly') fee = amount * (rate / 100) * (days / 30);
+    else if (method === 'annual') fee = amount * (rate / 100) * (days / 365);
+    else fee = rate;
+    fee = Math.round(fee * 100) / 100;
+    $('fee').textContent = '$' + fee.toLocaleString(undefined, {minimumFractionDigits: 2});
+    $('total').textContent = 'New balance due: $' + (amount + fee).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' (' + days + ' days overdue)';
+    $('copyLine').value = 'As a reminder, invoice payment is now ' + days +
+      ' days past due. Per the payment terms, a late fee of $' + fee.toLocaleString(undefined, {minimumFractionDigits: 2}) +
+      ' has accrued, bringing the balance to $' + (amount + fee).toLocaleString(undefined, {minimumFractionDigits: 2}) +
+      '. I’m happy to waive the fee if payment is received within the next 5 business days.';
+  }
+  $('method').addEventListener('change', function () {
+    var m = $('method').value;
+    $('rateLabel').textContent = m === 'monthly' ? 'Monthly rate %' : m === 'annual' ? 'Annual rate %' : 'Flat fee amount';
+    $('feeRate').value = m === 'monthly' ? 1.5 : m === 'annual' ? 12 : 50;
+    calc();
+  });
+  ['amount', 'days', 'feeRate'].forEach(function (id) { $(id).addEventListener('input', calc); });
+  calc();
+})();
+</script>
+</body>
+</html>

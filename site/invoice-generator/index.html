@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Invoice Generator — Create & Download a PDF Invoice in 60 Seconds</title>
+<meta name="description" content="Free online invoice generator. Fill in your details, add line items, and download a clean professional PDF invoice instantly. No sign-up, no watermark, 100% free.">
+<link rel="canonical" href="https://example.com/invoice-generator/">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .builder { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 900px) { .builder { grid-template-columns: 1fr; } }
+  .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .items-table td { padding: 4px 4px 4px 0; vertical-align: top; }
+  .items-table input { padding: 8px 10px; font-size: .92rem; }
+  .del-item { background: none; border: 0; color: #c33; font-size: 1.1rem; cursor: pointer; padding: 8px 4px; }
+  /* Invoice preview */
+  .invoice-paper {
+    background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: 40px 44px; box-shadow: var(--shadow); font-size: .92rem;
+    min-height: 500px;
+  }
+  .inv-head { display: flex; justify-content: space-between; margin-bottom: 34px; }
+  .inv-title { font-size: 1.7rem; font-weight: 800; letter-spacing: .06em; color: #1a1f2e; }
+  .inv-meta { text-align: right; color: #5a6072; font-size: .88rem; }
+  .inv-parties { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+  .inv-parties h4 { margin: 0 0 4px; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #9aa0b0; }
+  .inv-parties div { white-space: pre-line; }
+  .inv-items { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .inv-items th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #9aa0b0; border-bottom: 2px solid #e4e4de; padding: 6px 8px 6px 0; }
+  .inv-items th:last-child, .inv-items td:last-child { text-align: right; }
+  .inv-items td { padding: 9px 8px 9px 0; border-bottom: 1px solid #f0f0ea; }
+  .inv-totals { margin-left: auto; width: 240px; }
+  .inv-totals div { display: flex; justify-content: space-between; padding: 5px 0; }
+  .inv-totals .grand { border-top: 2px solid #1a1f2e; font-weight: 800; font-size: 1.1rem; margin-top: 6px; padding-top: 10px; }
+  .inv-notes { margin-top: 30px; color: #5a6072; white-space: pre-line; font-size: .88rem; }
+  @media print {
+    body * { visibility: hidden; }
+    #invoicePaper, #invoicePaper * { visibility: visible; }
+    #invoicePaper { position: absolute; left: 0; top: 0; width: 100%; border: 0; box-shadow: none; border-radius: 0; padding: 20px 10px; }
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="../">Lancer<span>Kit</span></a>
+    <nav class="main">
+      <a href="../invoice-generator/">Invoice Generator</a>
+      <a href="../hourly-rate-calculator/">Rate Calculator</a>
+      <a href="../invoice-template/">Templates</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="wrap">
+  <h1>Free Invoice Generator</h1>
+  <p class="subtitle">Create a clean, professional invoice and download it as a PDF in about a minute. No account, no watermark, nothing to install — everything happens in your browser and your data never leaves your device.</p>
+
+  <div class="builder">
+    <div class="card" id="form">
+      <div class="row">
+        <div><label for="invNo">Invoice #</label><input type="text" id="invNo" value="INV-001"></div>
+        <div><label for="invDate">Date</label><input type="date" id="invDate"></div>
+        <div><label for="invDue">Due date</label><input type="date" id="invDue"></div>
+      </div>
+      <label for="fromField">From (your name / business)</label>
+      <textarea id="fromField" rows="3" placeholder="Jane Doe Design&#10;jane@example.com&#10;123 Main St, Springfield"></textarea>
+      <label for="toField">Bill to (client)</label>
+      <textarea id="toField" rows="3" placeholder="Acme Corp&#10;accounts@acme.com"></textarea>
+
+      <label>Line items</label>
+      <table class="items-table"><tbody id="itemRows"></tbody></table>
+      <button class="btn secondary" type="button" id="addItem" style="margin-top:10px; padding:8px 16px; font-size:.9rem;">+ Add item</button>
+
+      <div class="row" style="margin-top:6px;">
+        <div><label for="taxRate">Tax rate %</label><input type="number" id="taxRate" value="0" min="0" step="0.1"></div>
+        <div><label for="currency">Currency</label>
+          <select id="currency">
+            <option value="$">USD $</option><option value="€">EUR €</option><option value="£">GBP £</option>
+            <option value="CA$">CAD $</option><option value="AU$">AUD $</option><option value="¥">JPY ¥</option>
+            <option value="₹">INR ₹</option><option value="R$">BRL R$</option>
+          </select>
+        </div>
+      </div>
+      <label for="notes">Notes / payment details</label>
+      <textarea id="notes" rows="3" placeholder="Payment via bank transfer to...&#10;Payment due within 14 days."></textarea>
+      <div style="margin-top:20px; display:flex; gap:12px;">
+        <button class="btn" type="button" onclick="window.print()">Download PDF</button>
+        <button class="btn secondary" type="button" id="clearBtn">Clear</button>
+      </div>
+      <p class="result-note" style="margin-top:12px;">“Download PDF” opens your browser's print dialog — choose “Save as PDF”. Your entries are saved locally in your browser so you can come back anytime.</p>
+    </div>
+
+    <div class="invoice-paper" id="invoicePaper">
+      <div class="inv-head">
+        <div class="inv-title">INVOICE</div>
+        <div class="inv-meta" id="pMeta"></div>
+      </div>
+      <div class="inv-parties">
+        <div style="flex:1"><h4>From</h4><div id="pFrom">—</div></div>
+        <div style="flex:1"><h4>Bill To</h4><div id="pTo">—</div></div>
+      </div>
+      <table class="inv-items">
+        <thead><tr><th style="width:50%">Description</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead>
+        <tbody id="pItems"></tbody>
+      </table>
+      <div class="inv-totals">
+        <div><span>Subtotal</span><span id="pSub">—</span></div>
+        <div id="pTaxRow"><span id="pTaxLabel">Tax</span><span id="pTax">—</span></div>
+        <div class="grand"><span>Total</span><span id="pTotal">—</span></div>
+      </div>
+      <div class="inv-notes" id="pNotes"></div>
+    </div>
+  </div>
+
+  <div class="reco" data-slot="affiliate-invoice">
+    <strong>Getting paid from abroad?</strong> International bank transfers can quietly eat 3–5% in hidden exchange-rate markups. A multi-currency account like Wise or Payoneer usually costs a fraction of that — worth setting up before your next international invoice.
+  </div>
+
+  <h2>How to use this invoice generator</h2>
+  <ol>
+    <li><strong>Fill in your details</strong> — your business name, your client, invoice number and dates.</li>
+    <li><strong>Add line items</strong> — a description, quantity and rate for each service or product. The totals update live.</li>
+    <li><strong>Download the PDF</strong> — click “Download PDF” and choose <em>Save as PDF</em> in the print dialog. Send it to your client by email.</li>
+  </ol>
+
+  <h2 id="faq">Frequently asked questions</h2>
+  <div class="faq">
+    <h3>Is this invoice generator really free?</h3>
+    <p>Yes — completely free, with no watermark, no account, and no limit on how many invoices you create.</p>
+    <h3>Where is my data stored?</h3>
+    <p>Only in your own browser (localStorage). Nothing you type is sent to any server, which also makes this tool safe for confidential client work.</p>
+    <h3>What should an invoice include?</h3>
+    <p>A unique invoice number, your business name and contact details, the client's details, an issue date and due date, a clear description of each item, the amounts, any tax, and how you'd like to be paid.</p>
+    <h3>Can I use it for my profession?</h3>
+    <p>Yes. If you want a head start, we have <a href="../invoice-template/">pre-filled invoice examples for 20+ professions</a> — designers, developers, photographers, cleaners, consultants and more.</p>
+  </div>
+</div>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 LancerKit — free tools for freelancers. <a href="../about/">About</a> · <a href="../privacy/">Privacy</a></p>
+    <p>This site provides general information, not tax, legal or financial advice.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var rows = $('itemRows');
+
+  function itemRow(desc, qty, rate) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="width:50%"><input type="text" class="i-desc" placeholder="Description" value="' + (desc || '') + '"></td>' +
+      '<td><input type="number" class="i-qty" min="0" step="any" placeholder="1" value="' + (qty || '') + '"></td>' +
+      '<td><input type="number" class="i-rate" min="0" step="any" placeholder="0.00" value="' + (rate || '') + '"></td>' +
+      '<td><button type="button" class="del-item" title="Remove">×</button></td>';
+    tr.querySelector('.del-item').onclick = function () { tr.remove(); render(); };
+    tr.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', render); });
+    rows.appendChild(tr);
+  }
+
+  function money(n, cur) {
+    return cur + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function esc(s) {
+    var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+  }
+
+  function render() {
+    var cur = $('currency').value;
+    $('pFrom').textContent = $('fromField').value || '—';
+    $('pTo').textContent = $('toField').value || '—';
+    var meta = '# ' + ($('invNo').value || '') ;
+    if ($('invDate').value) meta += '\nDate: ' + $('invDate').value;
+    if ($('invDue').value) meta += '\nDue: ' + $('invDue').value;
+    $('pMeta').innerHTML = esc(meta).replace(/\n/g, '<br>');
+    var sub = 0, html = '';
+    rows.querySelectorAll('tr').forEach(function (tr) {
+      var d = tr.querySelector('.i-desc').value;
+      var q = parseFloat(tr.querySelector('.i-qty').value) || 0;
+      var r = parseFloat(tr.querySelector('.i-rate').value) || 0;
+      var amt = q * r;
+      if (d || amt) {
+        sub += amt;
+        html += '<tr><td>' + esc(d) + '</td><td>' + q + '</td><td>' + money(r, cur) + '</td><td>' + money(amt, cur) + '</td></tr>';
+      }
+    });
+    $('pItems').innerHTML = html || '<tr><td colspan="4" style="color:#9aa0b0">No items yet</td></tr>';
+    var taxRate = parseFloat($('taxRate').value) || 0;
+    var tax = sub * taxRate / 100;
+    $('pSub').textContent = money(sub, cur);
+    $('pTaxRow').style.display = taxRate ? 'flex' : 'none';
+    $('pTaxLabel').textContent = 'Tax (' + taxRate + '%)';
+    $('pTax').textContent = money(tax, cur);
+    $('pTotal').textContent = money(sub + tax, cur);
+    $('pNotes').textContent = $('notes').value;
+    save();
+  }
+
+  function save() {
+    var items = [];
+    rows.querySelectorAll('tr').forEach(function (tr) {
+      items.push({
+        d: tr.querySelector('.i-desc').value,
+        q: tr.querySelector('.i-qty').value,
+        r: tr.querySelector('.i-rate').value
+      });
+    });
+    try {
+      localStorage.setItem('lk_invoice', JSON.stringify({
+        no: $('invNo').value, date: $('invDate').value, due: $('invDue').value,
+        from: $('fromField').value, to: $('toField').value,
+        tax: $('taxRate').value, cur: $('currency').value, notes: $('notes').value, items: items
+      }));
+    } catch (e) {}
+  }
+
+  function load() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem('lk_invoice')); } catch (e) {}
+    // Prefill from ?items= querystring (used by template pages)
+    var params = new URLSearchParams(location.search);
+    var preset = params.get('items');
+    if (preset) {
+      preset.split('|').forEach(function (p) { itemRow(p, 1, ''); });
+    } else if (s && s.items && s.items.length) {
+      $('invNo').value = s.no || 'INV-001'; $('invDate').value = s.date || '';
+      $('invDue').value = s.due || ''; $('fromField').value = s.from || '';
+      $('toField').value = s.to || ''; $('taxRate').value = s.tax || 0;
+      $('currency').value = s.cur || '$'; $('notes').value = s.notes || '';
+      s.items.forEach(function (it) { itemRow(it.d, it.q, it.r); });
+    } else {
+      itemRow('', 1, ''); itemRow('', 1, ''); itemRow('', 1, '');
+    }
+    if (!$('invDate').value) $('invDate').valueAsDate = new Date();
+  }
+
+  $('addItem').onclick = function () { itemRow('', 1, ''); };
+  $('clearBtn').onclick = function () {
+    try { localStorage.removeItem('lk_invoice'); } catch (e) {}
+    location.href = location.pathname;
+  };
+  ['invNo','invDate','invDue','fromField','toField','taxRate','currency','notes'].forEach(function (id) {
+    $(id).addEventListener('input', render);
+  });
+  load();
+  render();
+})();
+</script>
+</body>
+</html>

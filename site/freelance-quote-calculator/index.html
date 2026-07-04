@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freelance Project Quote Calculator — Price a Project With Confidence</title>
+<meta name="description" content="Turn your hourly rate into a solid project quote. Accounts for revisions, meetings, project management overhead, rush fees and contingency — so you stop underquoting.">
+<link rel="canonical" href="https://example.com/freelance-quote-calculator/">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="../">Lancer<span>Kit</span></a>
+    <nav class="main">
+      <a href="../invoice-generator/">Invoice Generator</a>
+      <a href="../hourly-rate-calculator/">Rate Calculator</a>
+      <a href="../invoice-template/">Templates</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="wrap">
+  <h1>Freelance Project Quote Calculator</h1>
+  <p class="subtitle">Most underquoting happens because we price the <em>work</em> and forget the meetings, revisions, and project management around it. This calculator builds those in, so the number you send is one you won't regret.</p>
+
+  <div class="card" style="max-width:640px">
+    <div class="row">
+      <div>
+        <label for="rate">Your hourly rate</label>
+        <input type="number" id="rate" value="75" min="0" step="5">
+      </div>
+      <div>
+        <label for="workHours">Estimated hands-on work (hours)</label>
+        <input type="number" id="workHours" value="30" min="0">
+      </div>
+    </div>
+    <p class="result-note">Don't know your rate? Start with the <a href="../hourly-rate-calculator/">hourly rate calculator</a>.</p>
+    <div class="row">
+      <div>
+        <label for="revisions">Revision rounds included</label>
+        <input type="number" id="revisions" value="2" min="0" max="10">
+      </div>
+      <div>
+        <label for="revPct">Hours per revision round (% of work)</label>
+        <input type="number" id="revPct" value="15" min="0" max="100">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="overhead">Meetings & PM overhead %</label>
+        <input type="number" id="overhead" value="20" min="0" max="100">
+      </div>
+      <div>
+        <label for="contingency">Contingency %</label>
+        <input type="number" id="contingency" value="15" min="0" max="100">
+      </div>
+    </div>
+    <label style="margin-top:16px"><input type="checkbox" id="rush" style="width:auto; margin-right:8px">Rush job (+25%)</label>
+
+    <div class="result-box">
+      <div>Quote this</div>
+      <div class="result-big" id="quote">—</div>
+      <div class="result-note" id="breakdown"></div>
+    </div>
+  </div>
+
+  <h2>Why each buffer exists</h2>
+  <table class="simple">
+    <tr><th>Buffer</th><th>What it covers</th></tr>
+    <tr><td>Revision rounds</td><td>Client feedback cycles — even “tiny tweaks” cost real hours. Cap the rounds in your contract and price extra rounds separately.</td></tr>
+    <tr><td>Meetings & PM</td><td>Kickoff calls, status updates, emails, file handoffs. Typically 15–25% of any project.</td></tr>
+    <tr><td>Contingency</td><td>The unknown unknowns: unclear briefs, missing assets, scope drift. Experienced freelancers never quote without it.</td></tr>
+    <tr><td>Rush fee</td><td>Compensates for reshuffling other clients and working evenings. 25–50% is standard and clients expect it.</td></tr>
+  </table>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <h3>Should I show the client this breakdown?</h3>
+    <p>Show the deliverables and the price, not the internal math. Itemize by outcome (“Homepage design — 2 concepts, 2 revision rounds”), never by hour, or you invite line-item haggling.</p>
+    <h3>The final number feels high. Should I lower it?</h3>
+    <p>Lower the <em>scope</em>, not the price. Offer a smaller package if budget is tight. Cutting the price for identical work just tells the client the first number was padding.</p>
+    <h3>How should I invoice a project like this?</h3>
+    <p>A deposit (30–50%) before you start, the balance on delivery. Generate both invoices with our <a href="../invoice-generator/">free invoice generator</a> and put the payment terms right on them.</p>
+  </div>
+</div>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 LancerKit — free tools for freelancers. <a href="../about/">About</a> · <a href="../privacy/">Privacy</a></p>
+    <p>This site provides general information, not tax, legal or financial advice.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  function $(id) { return document.getElementById(id); }
+  function calc() {
+    var rate = +$('rate').value || 0;
+    var work = +$('workHours').value || 0;
+    var revH = work * ((+$('revPct').value || 0) / 100) * (+$('revisions').value || 0);
+    var subtotalH = (work + revH) * (1 + (+$('overhead').value || 0) / 100);
+    var totalH = subtotalH * (1 + (+$('contingency').value || 0) / 100);
+    var price = totalH * rate;
+    if ($('rush').checked) price *= 1.25;
+    price = Math.ceil(price / 50) * 50; // round up to a clean number
+    $('quote').textContent = '$' + price.toLocaleString();
+    $('breakdown').textContent = Math.round(totalH) + ' true hours (' + work + ' hands-on + ' +
+      Math.round(revH) + ' revisions + overhead & contingency)' + ($('rush').checked ? ' + rush fee' : '') +
+      '. Suggested deposit: $' + Math.ceil(price * 0.4 / 50) * 50 + '.';
+  }
+  ['rate','workHours','revisions','revPct','overhead','contingency','rush'].forEach(function (id) {
+    $(id).addEventListener('input', calc);
+  });
+  calc();
+})();
+</script>
+</body>
+</html>

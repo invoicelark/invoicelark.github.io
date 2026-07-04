@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freelance Hourly Rate Calculator — What Should You Charge?</title>
+<meta name="description" content="Work out the freelance hourly rate you actually need. Accounts for target income, business costs, taxes, holidays and non-billable time — not just salary ÷ 2000.">
+<link rel="canonical" href="https://example.com/hourly-rate-calculator/">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="../">Lancer<span>Kit</span></a>
+    <nav class="main">
+      <a href="../invoice-generator/">Invoice Generator</a>
+      <a href="../hourly-rate-calculator/">Rate Calculator</a>
+      <a href="../invoice-template/">Templates</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="wrap">
+  <h1>Freelance Hourly Rate Calculator</h1>
+  <p class="subtitle">“Take your old salary and divide by 2,000” is how freelancers end up underpaid. This calculator works backwards from the income you want, and accounts for the hours you can't bill, the costs a salary used to hide, and time off.</p>
+
+  <div class="card" style="max-width:640px">
+    <div class="row">
+      <div>
+        <label for="income">Target annual income (before tax)</label>
+        <input type="number" id="income" value="80000" min="0" step="1000">
+      </div>
+      <div>
+        <label for="costs">Annual business costs</label>
+        <input type="number" id="costs" value="8000" min="0" step="500">
+      </div>
+    </div>
+    <p class="result-note">Costs = software, hardware, insurance, accounting, co-working, marketing, health cover — everything an employer used to pay for.</p>
+    <div class="row">
+      <div>
+        <label for="weeks">Weeks off per year (holiday + sick + admin)</label>
+        <input type="number" id="weeks" value="6" min="0" max="30">
+      </div>
+      <div>
+        <label for="hours">Working hours per week</label>
+        <input type="number" id="hours" value="40" min="1" max="80">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="billable">% of time that's actually billable</label>
+        <input type="number" id="billable" value="60" min="10" max="100">
+      </div>
+      <div>
+        <label for="buffer">Safety margin %</label>
+        <input type="number" id="buffer" value="10" min="0" max="50">
+      </div>
+    </div>
+    <p class="result-note">Most freelancers bill only 50–70% of their working time. The rest goes to finding clients, emails, invoicing (our <a href="../invoice-generator/">free invoice generator</a> helps with that one), and learning.</p>
+
+    <div class="result-box">
+      <div>Your minimum hourly rate</div>
+      <div class="result-big" id="rate">—</div>
+      <div class="result-note" id="detail"></div>
+    </div>
+  </div>
+
+  <div class="reco" data-slot="affiliate-rate">
+    <strong>Charging clients in another currency?</strong> Before you quote, check what you'll actually receive after conversion. Multi-currency accounts (Wise, Payoneer) typically save 2–4% per invoice versus a regular bank — at freelance rates, that's often an extra hour of pay per project.
+  </div>
+
+  <h2>How the calculation works</h2>
+  <p>The formula is straightforward but honest:</p>
+  <p><strong>(Target income + business costs) ÷ billable hours per year × safety margin</strong></p>
+  <p>Billable hours = (52 − weeks off) × hours per week × billable %. The safety margin covers late payers, dry months, and scope creep — things every freelancer meets eventually.</p>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <h3>Why is the rate so much higher than my old salary suggests?</h3>
+    <p>Because as a freelancer you pay for everything an employer used to cover — equipment, insurance, retirement, sick days, slow weeks — and you can only bill a fraction of your working hours. A rate that "matches" your old salary is actually a large pay cut.</p>
+    <h3>Should I charge hourly or per project?</h3>
+    <p>Use your hourly rate as an internal floor, then quote per project where you can. Project pricing rewards you for being fast and experienced; hourly pricing punishes it. Our <a href="../freelance-quote-calculator/">project quote calculator</a> helps you build a project price from your rate.</p>
+    <h3>What if the result is above the market rate for my field?</h3>
+    <p>That's useful information: it means at market rates you'd need more billable hours, lower costs, or a different positioning (higher-value clients, productized services). Better to learn it from a calculator than from your bank balance.</p>
+  </div>
+</div>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 LancerKit — free tools for freelancers. <a href="../about/">About</a> · <a href="../privacy/">Privacy</a></p>
+    <p>This site provides general information, not tax, legal or financial advice.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  var ids = ['income', 'costs', 'weeks', 'hours', 'billable', 'buffer'];
+  function $(id) { return document.getElementById(id); }
+  function calc() {
+    var income = +$('income').value || 0;
+    var costs = +$('costs').value || 0;
+    var weeks = Math.min(+$('weeks').value || 0, 51);
+    var hours = +$('hours').value || 1;
+    var billable = Math.max(+$('billable').value || 1, 1) / 100;
+    var buffer = 1 + (+$('buffer').value || 0) / 100;
+    var billableHours = (52 - weeks) * hours * billable;
+    if (billableHours <= 0) return;
+    var rate = (income + costs) / billableHours * buffer;
+    $('rate').textContent = '$' + Math.ceil(rate) + ' / hour';
+    $('detail').textContent = 'Based on ' + Math.round(billableHours) +
+      ' billable hours per year. Day rate ≈ $' + Math.ceil(rate * 7) +
+      ' · Project week ≈ $' + Math.ceil(rate * 35).toLocaleString() + '.';
+  }
+  ids.forEach(function (id) { $(id).addEventListener('input', calc); });
+  calc();
+})();
+</script>
+</body>
+</html>

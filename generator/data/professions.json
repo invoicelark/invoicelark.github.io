@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "graphic-designer",
+    "name": "Graphic Designer",
+    "intro": "Design work is easy to underbill: revisions blur into new scope, and source files quietly become a deliverable. A good design invoice names each deliverable, states the revision rounds included, and separates licensing from labor so clients understand what they're paying for.",
+    "items": ["Logo design — 3 concepts, 2 revision rounds", "Brand style guide (12 pages)", "Business card design — print-ready files", "Social media template pack (10 templates)", "Additional revision round", "Source file handover & licensing"],
+    "rate": "$45–$150/hour depending on specialization; brand identity projects commonly run $1,500–$10,000",
+    "tips": "Bill a 50% deposit before concepts, and state in the invoice notes that full usage rights transfer only on final payment — it is the single strongest lever a designer has against non-payment."
+  },
+  {
+    "slug": "web-developer",
+    "name": "Web Developer",
+    "intro": "Development invoices go wrong when they list hours against vague labels like \"site work.\" Clients pay faster when each line maps to something they can see: a page, a feature, a fix. Group small tickets into one line with a short summary rather than thirty micro-entries.",
+    "items": ["Homepage development (responsive, CMS-integrated)", "Contact form with spam protection", "Performance optimization — Core Web Vitals pass", "Bug fixes & browser testing (batch of 8 tickets)", "Deployment & DNS configuration", "30 days post-launch support"],
+    "rate": "$50–$180/hour; small business sites typically $2,000–$15,000",
+    "tips": "Invoice per milestone (design approved / staging live / launch), never all-on-delivery. A site that is 90% done has 0% leverage if the full amount is still unbilled."
+  },
+  {
+    "slug": "photographer",
+    "name": "Photographer",
+    "intro": "Photography invoices need to separate three different things clients constantly conflate: your time on the shoot, the editing hours afterwards, and the license to use the images. Put them on separate lines and disputes about \"but I thought I owned the photos\" mostly disappear.",
+    "items": ["Half-day photo shoot (4 hours, on location)", "Image editing & color grading — 40 selects", "Commercial usage license (web + social, 2 years)", "Additional edited images (per image)", "Travel expenses", "Rush delivery (48-hour turnaround)"],
+    "rate": "$100–$300/hour for commercial work; day rates $800–$3,000",
+    "tips": "Always invoice the usage license as its own line. It anchors the value of the images beyond your hours and creates a natural upsell when the client wants broader usage later."
+  },
+  {
+    "slug": "copywriter",
+    "name": "Copywriter",
+    "intro": "Copy is invisible labor — the client sees 200 words and forgets the research, interviews and rewrites behind them. Your invoice is where that work becomes visible: name the asset, the research, and the revision rounds as separate lines.",
+    "items": ["Website copy — 5 pages (home, about, services, pricing, contact)", "SEO blog article, 1,500 words incl. keyword research", "Email welcome sequence (5 emails)", "Landing page copy incl. 2 headline variants", "Competitor & voice research", "Revision round beyond included two"],
+    "rate": "$50–$150/hour; per-word rates $0.10–$1.00; landing pages $500–$3,000",
+    "tips": "Quote per asset, not per word, whenever you can — per-word pricing rewards padding and punishes the concision clients actually want."
+  },
+  {
+    "slug": "video-editor",
+    "name": "Video Editor",
+    "intro": "Video projects blow up in the revision phase, so the invoice should make the revision economy explicit: what rounds are included, what a new round costs, and what happens when the client swaps footage after picture lock.",
+    "items": ["Video editing — 10-min YouTube video, 2 revision rounds", "Color correction & grading", "Motion graphics & lower thirds", "Sound design & audio mixing", "Additional revision after picture lock", "Raw footage organization & sync"],
+    "rate": "$40–$120/hour; per-video flat rates $300–$2,500 for YouTube work",
+    "tips": "Define \"picture lock\" in your invoice notes and charge separately for changes after it. It is the only reliable defense against the client who finds new footage the day before delivery."
+  },
+  {
+    "slug": "consultant",
+    "name": "Consultant",
+    "intro": "Consulting invoices carry more scrutiny than any other freelance invoice — often a finance team, not your contact, approves them. Reference the engagement or SOW number, break work into phases, and attach nothing that needs explaining.",
+    "items": ["Discovery & stakeholder interviews (phase 1)", "Market analysis & competitive report", "Strategy workshop — full day, on site", "Final recommendations deck & presentation", "Monthly advisory retainer", "Travel & expenses (receipts attached)"],
+    "rate": "$100–$400/hour; day rates $1,000–$5,000 depending on field",
+    "tips": "Put the client's PO or SOW reference on the invoice — large-company accounts payable departments routinely sit on invoices that lack one, and it is never their job to chase you for it."
+  },
+  {
+    "slug": "virtual-assistant",
+    "name": "Virtual Assistant",
+    "intro": "VA work is many small tasks, and an invoice that lists every one looks chaotic while an invoice that says \"VA services\" looks opaque. The fix is category lines with hour subtotals — inbox, scheduling, research, admin — backed by a time log you attach.",
+    "items": ["Inbox & calendar management — 12 hours", "Travel booking & itinerary planning", "Data entry & CRM updates — 6 hours", "Research & report preparation", "Social media scheduling (20 posts)", "Monthly retainer — 40 hours"],
+    "rate": "$25–$75/hour; monthly retainers $500–$2,500",
+    "tips": "Sell hour-block retainers invoiced at the start of the month rather than loose hours billed after. Cash flow flips in your favor and clients treat reserved hours with more respect."
+  },
+  {
+    "slug": "social-media-manager",
+    "name": "Social Media Manager",
+    "intro": "Social clients buy outcomes but you deliver activities, and the invoice has to bridge that gap: pair each activity line (content, scheduling, engagement) with the deliverable counts so the retainer never feels like a black box.",
+    "items": ["Content creation — 16 posts across 2 platforms", "Community management & engagement (daily)", "Monthly analytics report & strategy call", "Paid ad campaign management (ad spend billed separately)", "Story/Reel production (8 pieces)", "Monthly retainer — full management"],
+    "rate": "$30–$100/hour; monthly retainers $800–$4,000 per platform bundle",
+    "tips": "Never let ad spend flow through your invoice as if it were your fee — bill it separately or have the client pay the platform directly, or you'll pay tax and fees on money that was never yours."
+  },
+  {
+    "slug": "illustrator",
+    "name": "Illustrator",
+    "intro": "Illustration pricing is licensing pricing. The same drawing is worth $200 as a blog spot and $20,000 on national packaging, so the invoice must say where, how long, and how exclusively the client may use the work — or you have silently sold everything for the price of anything.",
+    "items": ["Editorial illustration — single use, web", "Character design — 3 poses + expression sheet", "Book cover illustration incl. print license", "Spot illustrations (set of 5)", "License extension — social media, 1 year", "Original artwork files (layered)"],
+    "rate": "$50–$200/hour; editorial spots $250–$1,500; covers $1,000–$5,000",
+    "tips": "State the license on the invoice itself (\"single editorial use, worldwide web, 1 year\") — an invoice the client paid is the cleanest possible evidence of what they actually bought."
+  },
+  {
+    "slug": "translator",
+    "name": "Translator",
+    "intro": "Translation invoices live and die by the counting unit. State the source word count, the rate per word, and the language pair on every line — and bill revisions caused by source-text changes as new work, because they are.",
+    "items": ["Translation EN→ES — 8,400 source words", "Certified translation incl. signed statement", "Proofreading of existing translation — 12,000 words", "Rush surcharge (48-hour delivery)", "Glossary & terminology database creation", "DTP / formatting of translated documents"],
+    "rate": "$0.08–$0.25 per source word; certified documents $25–$75 per page",
+    "tips": "Always bill on source word count, never target — target counts vary by language and invite disputes after the fact. The source count is fixed before you start."
+  },
+  {
+    "slug": "cleaner",
+    "name": "Cleaning Professional",
+    "intro": "Cleaning invoices are simple, and that is their power: date, location, service, price. The businesses that get paid fastest attach before/after photo links for one-off jobs and invoice recurring clients on a fixed monthly schedule rather than per visit.",
+    "items": ["Standard home cleaning — 3 bed / 2 bath", "Deep cleaning incl. oven & windows", "Move-out cleaning with bond-back guarantee", "Weekly office cleaning (monthly billing)", "Carpet steam cleaning — 4 rooms", "Supplies & specialized products"],
+    "rate": "$30–$80/hour; flat rates $120–$400 per home visit",
+    "tips": "Move weekly clients to one monthly invoice via auto-payment. You send 12 invoices a year instead of 52, and the money arrives before the month's work instead of after each visit."
+  },
+  {
+    "slug": "personal-trainer",
+    "name": "Personal Trainer",
+    "intro": "Session-by-session billing is where training income goes to die — every cancellation is a refund conversation. Invoice packages and monthly programs up front, and let the invoice state the expiry and cancellation terms so they're agreed before the first squat.",
+    "items": ["Personal training package — 10 sessions", "Monthly online coaching incl. program & check-ins", "Custom training program (12 weeks)", "Nutrition plan & grocery guide", "Fitness assessment & goal setting session", "Small group training — per person, 8 weeks"],
+    "rate": "$40–$150 per session; online coaching $100–$500/month",
+    "tips": "Put \"sessions expire 90 days from purchase\" on the package invoice. Without an expiry, unused sessions are a liability that follows you for years."
+  },
+  {
+    "slug": "tutor",
+    "name": "Tutor",
+    "intro": "Tutoring invoices go to parents who are comparing you with an agency, so look the part: student name, subject, session log with dates, and a monthly total. Billing monthly in advance for a fixed weekly slot beats chasing payment session by session.",
+    "items": ["Math tutoring — 8 sessions × 1 hour (monthly)", "Exam preparation intensive — 5 × 90 min", "Essay review & written feedback", "Initial assessment & study plan", "Group session — per student", "Materials & practice workbook"],
+    "rate": "$25–$120/hour depending on level and subject",
+    "tips": "Invoice the month ahead, not behind, and offer a small sibling or prepay discount — parents value predictability and you eliminate the no-show problem financially."
+  },
+  {
+    "slug": "electrician",
+    "name": "Electrician",
+    "intro": "Trade invoices need two things office invoices don't: a parts/labor split and compliance details. List materials with a modest disclosed markup, labor by hours or fixed quote, and your license number on every invoice — commercial clients often can't pay without it.",
+    "items": ["Call-out & diagnostic fee", "Labor — 4 hours on site", "Materials: breaker panel, cabling (itemized)", "Safety inspection & compliance certificate", "Emergency after-hours surcharge", "Second technician — 2 hours"],
+    "rate": "$60–$150/hour; call-out fees $75–$200",
+    "tips": "Photograph the completed work and reference it on the invoice. For property managers and landlords it doubles as their compliance record, which makes your invoice the easy one to approve."
+  },
+  {
+    "slug": "handyman",
+    "name": "Handyman",
+    "intro": "Handyman jobs are bundles of small tasks, so the invoice should read like the to-do list you cleared: each task its own line with a price. Clients tolerate a $480 total far better when they see six named jobs than one line that says \"repairs.\"",
+    "items": ["Drywall patch & paint — hallway", "Door adjustment & lock replacement", "Gutter cleaning & downspout repair", "Furniture assembly (3 items)", "Materials & hardware (receipts available)", "Minimum call-out charge"],
+    "rate": "$40–$100/hour; half-day rates $200–$400",
+    "tips": "Have a minimum charge and print it on the invoice. It filters out the \"just one tiny thing\" jobs that cost you an hour of driving for twenty minutes of billing."
+  },
+  {
+    "slug": "makeup-artist",
+    "name": "Makeup Artist",
+    "intro": "Event work runs on dates, so the invoice's real job is protecting yours: deposit to lock the date, balance due before the event, early-start and travel fees stated plainly. Brides don't dispute line items — they dispute surprises.",
+    "items": ["Bridal makeup incl. trial session", "Bridesmaid makeup — per person (4)", "Early start fee (before 7 am)", "Touch-up hourly stay-on service", "Travel to venue", "Lashes & premium add-ons"],
+    "rate": "$50–$150 per face; bridal packages $250–$800",
+    "tips": "Make the deposit non-refundable and say so on the invoice — you are selling a date more than a service, and a cancelled Saturday in wedding season cannot be resold on Thursday."
+  },
+  {
+    "slug": "musician",
+    "name": "Musician",
+    "intro": "Gig invoices should read like a run sheet: date, venue, set times, and what's included (PA, lighting, learning requests). Studio work is different — there you're invoicing per song or per hour plus usage, and the two should never be mixed on one line.",
+    "items": ["Live performance — 2 × 45 min sets", "Ceremony + reception package", "Session recording — per song", "Custom song arrangement & learning fee", "PA & equipment provision", "Travel beyond 50 km"],
+    "rate": "$200–$1,500 per gig; session work $50–$150/hour or $100–$400/song",
+    "tips": "Require the balance before you play, not after — collecting from a venue manager at 1 a.m. after load-out is nobody's best negotiating position."
+  },
+  {
+    "slug": "bookkeeper",
+    "name": "Bookkeeper",
+    "intro": "A bookkeeper's invoice is a work sample — if it isn't immaculate, why would anyone trust you with theirs? Fixed monthly packages tied to transaction volume invoice cleaner than hourly, and year-end or cleanup work belongs on separate project lines.",
+    "items": ["Monthly bookkeeping — up to 150 transactions", "Bank & credit card reconciliation (3 accounts)", "Accounts payable/receivable management", "Historical cleanup — 6 months backlog", "Payroll processing — 8 employees", "Year-end package for accountant handoff"],
+    "rate": "$30–$90/hour; monthly packages $300–$2,000",
+    "tips": "Price by transaction volume bands rather than hours. Clients understand \"up to 150 transactions\" instantly, and your growing efficiency raises your effective rate instead of cutting your bill."
+  },
+  {
+    "slug": "event-planner",
+    "name": "Event Planner",
+    "intro": "Event invoices must keep two rivers separate: your fee, and the client's money that merely flows through you to vendors. Itemize vendor payments distinctly (or better, have vendors bill the client directly) and stage your fee across planning milestones.",
+    "items": ["Full event planning & coordination fee", "Venue sourcing & site visits (3 venues)", "Vendor management — catering, AV, florals", "Day-of coordination — 12 hours incl. assistant", "Design & styling concept", "Vendor deposits paid on client's behalf (pass-through)"],
+    "rate": "10–20% of event budget, or $75–$200/hour; day-of coordination $800–$3,000",
+    "tips": "Invoice pass-through vendor costs separately and label them as such — mixing them into your fee inflates your apparent price and your tax reporting in one bad move."
+  },
+  {
+    "slug": "writer",
+    "name": "Freelance Writer",
+    "intro": "Writing invoices work best when each line is a finished asset with its word count and rounds included — and when kill fees and usage are already in the terms. Publications pay on invoice receipt dates, so send the invoice the day the piece is accepted, not published.",
+    "items": ["Feature article — 2,000 words, 2 revision rounds", "Blog package — 4 posts monthly, 1,200 words each", "Website copywriting — per page", "Ghostwritten thought-leadership article", "Kill fee (50% of commissioned piece)", "Content strategy & editorial calendar"],
+    "rate": "$0.10–$1.50 per word; $50–$200/hour; blog retainers $800–$4,000/month",
+    "tips": "Invoice on acceptance, not publication — editorial calendars slip by months and your rent doesn't. Any publication worth writing for pays on acceptance if you ask."
+  },
+  {
+    "slug": "dog-walker",
+    "name": "Dog Walker / Pet Sitter",
+    "intro": "Pet care billing is high-frequency and small-ticket, which makes per-walk invoicing pure overhead. Weekly or monthly consolidated invoices with a simple service log (date, dog, duration) keep it professional without drowning you in paperwork.",
+    "items": ["Group walks — 20 walks × 30 min (monthly)", "Solo walk — 60 min", "Pet sitting — overnight stay (per night)", "Drop-in visit incl. feeding & meds", "Puppy package — 2 visits daily, weekly billing", "Holiday surcharge"],
+    "rate": "$15–$40 per walk; overnights $50–$120; monthly packages $250–$800",
+    "tips": "Bill monthly in advance for regulars and add a stated holiday surcharge — the demand spike is predictable, and clients accept it when it's printed policy rather than a surprise."
+  }
+]
